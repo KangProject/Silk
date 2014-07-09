@@ -141,12 +141,12 @@ public abstract class SilkDrawerActivity extends FragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayout());
         if (getDrawerLayout() != null) {
             ActionBar ab = getActionBar();
             ab.setDisplayHomeAsUpEnabled(true);
         }
-        super.onCreate(savedInstanceState);
-        setContentView(getLayout());
         setupDrawer();
     }
 
