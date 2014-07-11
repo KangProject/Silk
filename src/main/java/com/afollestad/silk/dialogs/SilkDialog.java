@@ -3,10 +3,12 @@ package com.afollestad.silk.dialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -234,11 +236,10 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
         mDarkTheme = getArguments().getBoolean("dark_theme");
         if (mAccentColor == 0)
             mAccentColor = getContext().getResources().getColor(android.R.color.black);
-        int textColor = getContext().getResources().getColor(
-                mDarkTheme ? android.R.color.primary_text_dark : android.R.color.primary_text_light);
-        if (mPositiveText == null) mPositiveText = getString(android.R.string.ok);
 
-        Dialog dialog = new Dialog(getContext(),
+        Context context = new ContextThemeWrapper(getContext(), mDarkTheme ? android.R.style.Theme_Holo_Dialog_NoActionBar :
+                android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
+        Dialog dialog = new Dialog(context,
                 mDarkTheme ? android.R.style.Theme_Holo_Dialog_NoActionBar :
                         android.R.style.Theme_Holo_Light_Dialog_NoActionBar
         );
@@ -263,10 +264,8 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
         } else {
             message.setVisibility(View.GONE);
         }
-        message.setTextColor(textColor);
 
         Button positive = (Button) dialog.findViewById(android.R.id.button1);
-        positive.setTextColor(textColor);
         positive.setText(mPositiveText);
         positive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,7 +275,6 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
         });
 
         Button neutral = (Button) dialog.findViewById(android.R.id.button3);
-        neutral.setTextColor(textColor);
         if (mNeutralText != null) {
             neutral.setText(mNeutralText);
             neutral.setOnClickListener(new View.OnClickListener() {
@@ -289,7 +287,6 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
         } else neutral.setVisibility(View.GONE);
 
         Button negative = (Button) dialog.findViewById(android.R.id.button2);
-        negative.setTextColor(textColor);
         if (mNegativeText != null) {
             negative.setText(mNegativeText);
             negative.setOnClickListener(new View.OnClickListener() {
@@ -324,7 +321,6 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
                             inputArea.getPaddingRight(), inputArea.getPaddingBottom());
                 }
                 inputView = (EditText) inputArea.findViewById(android.R.id.input);
-                inputView.setTextColor(textColor);
                 if (mInputHint != null) inputView.setHint(mInputHint);
                 if (mInputPrefill != null) inputView.append(mInputPrefill);
                 childArea.addView(inputArea);
@@ -341,18 +337,15 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
                         radio.setText(mItems[i]);
                         radio.setTag(i);
                         radio.setOnClickListener(this);
-                        radio.setTextColor(textColor);
                     } else if (mMultiChoice) {
                         view = inflater.inflate(R.layout.dialog_listitem_checkbox, null);
                         CheckBox check = (CheckBox) view.findViewById(R.id.check);
                         check.setText(mItems[i]);
                         check.setTag(i);
                         check.setOnClickListener(this);
-                        check.setTextColor(textColor);
                     } else {
                         view = inflater.inflate(R.layout.dialog_listitem, null);
                         ((TextView) view).setText(mItems[i]);
-                        ((TextView) view).setTextColor(textColor);
                         view.setTag(i);
                         view.setOnClickListener(this);
                     }
