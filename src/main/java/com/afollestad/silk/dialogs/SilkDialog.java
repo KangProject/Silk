@@ -69,6 +69,7 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
     private InputCallback mInputCallback;
     private SelectionCallback mSelectionCallback;
     private MultiSelectionCallback mMultiChoiceCallback;
+    private DismissCallback mDismissCallback;
 
     private View customView;
     private EditText inputView;
@@ -144,6 +145,11 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
 
     public final SilkDialog setButtonListener(DialogCallback callback) {
         mCallback = callback;
+        return this;
+    }
+
+    public final SilkDialog setDismissListener(DismissCallback callback) {
+        mDismissCallback = callback;
         return this;
     }
 
@@ -386,6 +392,12 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
         super.onCancel(dialog);
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (mDismissCallback != null) mDismissCallback.onDismissed();
+    }
+
     public final SilkDialog show() {
         return show(false);
     }
@@ -454,5 +466,9 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
         public void onCancelled() {
             // Do nothing by default
         }
+    }
+
+    public static abstract interface DismissCallback {
+        public abstract void onDismissed();
     }
 }
