@@ -106,8 +106,7 @@
                 android:maxLines="2"
                 style="?android:attr/buttonBarButtonStyle"
                 android:textSize="14sp"
-                android:minHeight="48dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:text="@android:string/cancel" />
 
             <Button
@@ -118,8 +117,7 @@
                 android:maxLines="2"
                 style="?android:attr/buttonBarButtonStyle"
                 android:textSize="14sp"
-                android:minHeight="48dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="48dp" />
 
             <Button
                 android:id="@android:id/button1"
