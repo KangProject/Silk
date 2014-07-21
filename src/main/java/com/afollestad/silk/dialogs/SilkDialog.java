@@ -59,6 +59,7 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
     private String[] mItems;
     private String mInputHint;
     private String mInputPrefill;
+    private float lineSpacingMultiplier = 1.4f;
 
     private boolean mInput;
     private boolean mSingleChoice;
@@ -98,7 +99,17 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
         return setMessage(getContext().getString(message));
     }
 
+    public final SilkDialog setMessage(int message, float lineSpacingMultiplier) {
+        this.lineSpacingMultiplier = lineSpacingMultiplier;
+        return setMessage(getContext().getString(message));
+    }
+
     public final SilkDialog setMessage(int message, Object... formatArgs) {
+        return setMessage(getContext().getString(message, formatArgs));
+    }
+
+    public final SilkDialog setMessage(int message, float lineSpacingMultiplier, Object... formatArgs) {
+        this.lineSpacingMultiplier = lineSpacingMultiplier;
         return setMessage(getContext().getString(message, formatArgs));
     }
 
@@ -274,6 +285,7 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
         } else {
             message.setVisibility(View.GONE);
         }
+        message.setLineSpacing(0.0f, lineSpacingMultiplier);
 
         Button positive = (Button) dialog.findViewById(android.R.id.button1);
         positive.setText(mPositiveText);
