@@ -345,17 +345,20 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
                         RadioButton radio = (RadioButton) view.findViewById(R.id.radio);
                         if (preChoice == i) radio.setChecked(true);
                         radio.setText(mItems[i]);
+                        radio.setTextColor(mAccentColor);
                         radio.setTag(i);
                         radio.setOnClickListener(this);
                     } else if (mMultiChoice) {
                         view = inflater.inflate(R.layout.dialog_listitem_checkbox, null);
                         CheckBox check = (CheckBox) view.findViewById(R.id.check);
                         check.setText(mItems[i]);
+                        check.setTextColor(mAccentColor);
                         check.setTag(i);
                         check.setOnClickListener(this);
                     } else {
                         view = inflater.inflate(R.layout.dialog_listitem, null);
                         ((TextView) view).setText(mItems[i]);
+                        ((TextView) view).setTextColor(mAccentColor);
                         view.setTag(i);
                         view.setOnClickListener(this);
                     }
