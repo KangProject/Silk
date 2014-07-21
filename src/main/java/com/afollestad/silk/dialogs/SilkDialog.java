@@ -100,8 +100,7 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
     }
 
     public final SilkDialog setMessage(int message, float lineSpacingMultiplier) {
-        this.lineSpacingMultiplier = lineSpacingMultiplier;
-        return setMessage(getContext().getString(message));
+        return setMessage(getContext().getString(message), lineSpacingMultiplier);
     }
 
     public final SilkDialog setMessage(int message, Object... formatArgs) {
@@ -109,12 +108,17 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
     }
 
     public final SilkDialog setMessage(int message, float lineSpacingMultiplier, Object... formatArgs) {
-        this.lineSpacingMultiplier = lineSpacingMultiplier;
-        return setMessage(getContext().getString(message, formatArgs));
+        return setMessage(getContext().getString(message, formatArgs), lineSpacingMultiplier);
     }
 
     public SilkDialog setMessage(CharSequence message) {
         mMessage = message;
+        return this;
+    }
+
+    public SilkDialog setMessage(CharSequence message, float lineSpacingMultiplier) {
+        mMessage = message;
+        this.lineSpacingMultiplier = lineSpacingMultiplier;
         return this;
     }
 
