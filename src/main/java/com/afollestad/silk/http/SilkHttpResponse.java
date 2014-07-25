@@ -1,13 +1,15 @@
 package com.afollestad.silk.http;
 
-import ch.boye.httpclientandroidlib.Header;
-import ch.boye.httpclientandroidlib.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ch.boye.httpclientandroidlib.Header;
+import ch.boye.httpclientandroidlib.HttpResponse;
+import ch.boye.httpclientandroidlib.StatusLine;
 
 /**
  * Represents the response to an HTTP request.
@@ -18,12 +20,14 @@ public class SilkHttpResponse {
 
     private final List<SilkHttpHeader> mHeaders;
     private final byte[] mContent;
+    private final StatusLine mStatusLine;
 
     SilkHttpResponse(HttpResponse response, byte[] content) {
         mHeaders = new ArrayList<SilkHttpHeader>();
         for (Header header : response.getAllHeaders())
             mHeaders.add(new SilkHttpHeader(header));
         mContent = content;
+        mStatusLine = response.getStatusLine();
     }
 
     /**
@@ -43,6 +47,13 @@ public class SilkHttpResponse {
      */
     public SilkHttpHeader[] getHeaders() {
         return mHeaders.toArray(new SilkHttpHeader[mHeaders.size()]);
+    }
+
+    /**
+     * Gets the response status line, containing a status code and reason phrase.
+     */
+    public StatusLine getStatusLine() {
+        return mStatusLine;
     }
 
     /**
