@@ -60,6 +60,7 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
     private String mInputHint;
     private String mInputPrefill;
     private float lineSpacingMultiplier = 1.4f;
+    private int mTextColor;
 
     private boolean mInput;
     private boolean mSingleChoice;
@@ -253,14 +254,19 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         setRetainInstance(true);
-
         mDarkTheme = getArguments().getBoolean("dark_theme");
-        if (mAccentColor == 0) {
-            if (mDarkTheme)
-                mAccentColor = getContext().getResources().getColor(android.R.color.white);
-            else mAccentColor = getContext().getResources().getColor(android.R.color.black);
+
+        if (mDarkTheme) {
+            mTextColor = getContext().getResources().getColor(android.R.color.white);
+        } else {
+            mTextColor = getContext().getResources().getColor(android.R.color.black);
         }
-        if (mPositiveText == null) mPositiveText = getContext().getString(android.R.string.ok);
+        if (mAccentColor == 0) {
+            mAccentColor = mTextColor;
+        }
+        if (mPositiveText == null) {
+            mPositiveText = getContext().getString(android.R.string.ok);
+        }
 
         Context context = new ContextThemeWrapper(getContext(), mDarkTheme ? android.R.style.Theme_Holo_Dialog_NoActionBar :
                 android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
@@ -285,6 +291,7 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
 
         TextView message = (TextView) dialog.findViewById(android.R.id.message);
         if (mMessage != null && !TextUtils.isEmpty(mMessage)) {
+            message.setTextColor(mTextColor);
             message.setText(mMessage);
         } else {
             message.setVisibility(View.GONE);
@@ -361,20 +368,20 @@ public class SilkDialog extends DialogFragment implements View.OnClickListener {
                         RadioButton radio = (RadioButton) view.findViewById(R.id.radio);
                         if (preChoice == i) radio.setChecked(true);
                         radio.setText(mItems[i]);
-                        radio.setTextColor(mAccentColor);
+                        radio.setTextColor(mTextColor);
                         radio.setTag(i);
                         radio.setOnClickListener(this);
                     } else if (mMultiChoice) {
                         view = inflater.inflate(R.layout.dialog_listitem_checkbox, null);
                         CheckBox check = (CheckBox) view.findViewById(R.id.check);
                         check.setText(mItems[i]);
-                        check.setTextColor(mAccentColor);
+                        check.setTextColor(mTextColor);
                         check.setTag(i);
                         check.setOnClickListener(this);
                     } else {
                         view = inflater.inflate(R.layout.dialog_listitem, null);
                         ((TextView) view).setText(mItems[i]);
-                        ((TextView) view).setTextColor(mAccentColor);
+                        ((TextView) view).setTextColor(mTextColor);
                         view.setTag(i);
                         view.setOnClickListener(this);
                     }
